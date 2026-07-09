@@ -74,7 +74,7 @@ async def logout_user(response = Depends(logout)):
 
 # Public route that returns access token and type if User credentials are valid
 # Note: User Registration Endpoint disabled for Production
-@router_auth.post("/register", response_model=UserSchema, tags=["user"])
+# @router_auth.post("/register", response_model=UserSchema, tags=["user"])
 def register_user(new_user = Depends(do_register_user)):
     return new_user
 
