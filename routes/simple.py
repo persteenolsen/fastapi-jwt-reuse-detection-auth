@@ -15,5 +15,5 @@ async def read_root() -> dict:
 # Public ping route that returns a pong message
 @router_simple.get("/ping", tags=["simple"])
 async def read_root() -> dict:
-    return {"message": "Pong ..."}
 
+    return {"message": "Pong ..."}
