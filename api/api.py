@@ -19,29 +19,23 @@ from routes.simple import router_simple as router_simple_one
 
 # Initialize the FastAPI app
 app = FastAPI(
-
     title="Python + FastApi + PostgreSQL + Alembic + Auth by JWT with Revoked Token Reuse Detection",
-    description="08-07-2026 - FastAPI serving Authentication by JWT with Refresh Token Rotation and Revoked Token Reuse Detection using these credentials: testuser / admin",
+    description="10-07-2026 - FastAPI serving Authentication by JWT with Refresh Token Rotation and Revoked Token Reuse Detection using these credentials: testuser / admin",
     version="0.0.2",
-
     contact={
         "name": "Per Olsen",
         "url": "https://persteenolsen.netlify.app",
-         },
+    },
 )
 
 # Set up CORS middleware
 origins = [
-
     # Not sure if this is needed, but adding just in case
     "https://fastapi-jwt-reuse-detection-auth.vercel.app",
-
     # The domain name of the Vue 3 SPA Client
     "https://vue.fastapi.jwt.reuse.detection.auth.persteenolsen.com",
-     
     # Allow my local Vue SPA
-    "http://localhost:3000"
-    
+    "http://localhost:3000",
 ]
 
 
@@ -58,4 +52,3 @@ app.include_router(router_auth_jwt)
 
 # Include the routes from routes/simple.py
 app.include_router(router_simple_one)
-

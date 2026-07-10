@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 
+
 class UserCreate(BaseModel):
     username: str
 
@@ -7,6 +8,7 @@ class UserCreate(BaseModel):
     name: str
     email: EmailStr
     password: str
+
 
 class User(BaseModel):
     id: int
@@ -19,5 +21,5 @@ class User(BaseModel):
     class Config:
 
         # 19-12-2025 - Renamed orm_mode to from_attributes due to an Error
-        #orm_mode = True
+        # orm_mode = True
         from_attributes = True

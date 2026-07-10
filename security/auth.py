@@ -43,12 +43,9 @@ def create_access_token(data: dict):
     expire = now + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
     to_encode = data.copy()
-    to_encode.update({
-        "exp": expire,
-        "iat": now,
-        "jti": str(uuid.uuid4()),
-        "type": "access"
-    })
+    to_encode.update(
+        {"exp": expire, "iat": now, "jti": str(uuid.uuid4()), "type": "access"}
+    )
 
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -58,12 +55,14 @@ def create_refresh_token(data: dict):
     expire = now + timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
 
     to_encode = data.copy()
-    to_encode.update({
-        "exp": expire,
-        "iat": now,
-        "jti": str(uuid.uuid4()),   # ✅ UNIQUE PER TOKEN
-        "type": "refresh"
-    })
+    to_encode.update(
+        {
+            "exp": expire,
+            "iat": now,
+            "jti": str(uuid.uuid4()),  # ✅ UNIQUE PER TOKEN
+            "type": "refresh",
+        }
+    )
 
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 

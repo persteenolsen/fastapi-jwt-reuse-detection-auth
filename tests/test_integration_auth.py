@@ -7,6 +7,7 @@ BASE_URL = "http://localhost:8000"
 # HELPERS
 # ==========================================================
 
+
 def login():
 
     response = requests.post(
@@ -42,16 +43,12 @@ def logout_token(token):
 
 def cleanup():
 
-    return requests.post(
-        f"{BASE_URL}/cleanup-tokens"
-    )
+    return requests.post(f"{BASE_URL}/cleanup-tokens")
 
 
 def admin_purge():
 
-    return requests.post(
-        f"{BASE_URL}/admin/purge-refresh-tokens"
-    )
+    return requests.post(f"{BASE_URL}/admin/purge-refresh-tokens")
 
 
 # ==========================================================
@@ -72,26 +69,18 @@ def test_full_refresh_rotation_flow():
     response = refresh_token_call(refresh_token)
     assert response.status_code == 200
 
-    print(
-        f"   ✅ HTTP {response.status_code} OK - "
-        "First refresh successful"
-    )
+    print(f"   ✅ HTTP {response.status_code} OK - " "First refresh successful")
 
     new_refresh = response.json()["refreshToken"]
 
-    print(
-        "   ▶ Testing refresh token reuse detection"
-    )
+    print("   ▶ Testing refresh token reuse detection")
 
     # Old token reuse should fail
     response = refresh_token_call(refresh_token)
 
     assert response.status_code == 401
 
-    print(
-        f"   ✅ HTTP {response.status_code} Unauthorized - "
-        "Reuse detected"
-    )
+    print(f"   ✅ HTTP {response.status_code} Unauthorized - " "Reuse detected")
 
     # New token should also fail because the family was revoked
     response = refresh_token_call(new_refresh)
@@ -102,7 +91,8 @@ def test_full_refresh_rotation_flow():
         f"   ✅ HTTP {response.status_code} Unauthorized - "
         "Token family revoked after reuse detection"
     )
-    
+
+
 def test_refresh_token_reuse_detection():
 
     print("\n==============================")
@@ -129,23 +119,16 @@ def test_refresh_token_reuse_detection():
 
     detail = response.json()["detail"]
 
-    assert detail in (
-        "Refresh token reuse detected",
-        "Refresh token revoked"
-    )
+    assert detail in ("Refresh token reuse detected", "Refresh token revoked")
 
-    print(
-        "   ✅ Refresh token reuse detected"
-    )
+    print("   ✅ Refresh token reuse detected")
 
     # Token family (or all user refresh tokens) should now be revoked
     response = refresh_token_call(rotated_refresh)
 
     assert response.status_code == 401
 
-    print(
-        "   ✅ Active refresh token revoked after reuse detection"
-    )
+    print("   ✅ Active refresh token revoked after reuse detection")
 
 
 def test_logout_flow():
@@ -162,10 +145,7 @@ def test_logout_flow():
 
     assert response.status_code == 200
 
-    print(
-        f"   ✅ HTTP {response.status_code} OK - "
-        "Logout successful"
-    )
+    print(f"   ✅ HTTP {response.status_code} OK - " "Logout successful")
 
 
 def test_refresh_after_logout_should_fail():
@@ -200,10 +180,7 @@ def test_cleanup_endpoint():
 
     assert response.status_code == 200
 
-    print(
-        f"   ✅ HTTP {response.status_code} OK - "
-        "Cleanup executed successfully"
-    )
+    print(f"   ✅ HTTP {response.status_code} OK - " "Cleanup executed successfully")
 
 
 def test_admin_purge():
@@ -217,8 +194,7 @@ def test_admin_purge():
     assert response.status_code == 200
 
     print(
-        f"   ✅ HTTP {response.status_code} OK - "
-        "Admin purge executed successfully"
+        f"   ✅ HTTP {response.status_code} OK - " "Admin purge executed successfully"
     )
 
 

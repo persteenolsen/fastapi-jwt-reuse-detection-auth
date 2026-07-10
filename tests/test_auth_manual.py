@@ -9,30 +9,21 @@ from security.auth import (
     ALGORITHM,
 )
 
-
 # ==========================================================
 # JWT VALIDATION TESTS
 # ==========================================================
+
 
 def test_valid_token():
     """
     Verify that a valid access token is accepted.
     """
 
-    token = create_access_token(
-        {
-            "sub": "testuser"
-        }
-    )
+    token = create_access_token({"sub": "testuser"})
 
-    assert verify_token(
-        token,
-        expected_type="access"
-    ) == "testuser"
+    assert verify_token(token, expected_type="access") == "testuser"
 
-    print(
-        "   ✅ Access token accepted"
-    )
+    print("   ✅ Access token accepted")
 
 
 def test_wrong_type():
@@ -40,20 +31,11 @@ def test_wrong_type():
     Verify that an access token cannot be used as a refresh token.
     """
 
-    token = create_access_token(
-        {
-            "sub": "testuser"
-        }
-    )
+    token = create_access_token({"sub": "testuser"})
 
-    assert verify_token(
-        token,
-        expected_type="refresh"
-    ) is None
+    assert verify_token(token, expected_type="refresh") is None
 
-    print(
-        "   ✅ Wrong token type rejected"
-    )
+    print("   ✅ Wrong token type rejected")
 
 
 def test_refresh_token_type():
@@ -62,26 +44,13 @@ def test_refresh_token_type():
     and rejected as access type.
     """
 
-    token = create_refresh_token(
-        {
-            "sub": "testuser"
-        }
-    )
+    token = create_refresh_token({"sub": "testuser"})
 
-    assert verify_token(
-        token,
-        expected_type="refresh"
-    ) == "testuser"
+    assert verify_token(token, expected_type="refresh") == "testuser"
 
+    assert verify_token(token, expected_type="access") is None
 
-    assert verify_token(
-        token,
-        expected_type="access"
-    ) is None
-
-    print(
-        "   ✅ Refresh token type validation successful"
-    )
+    print("   ✅ Refresh token type validation successful")
 
 
 def test_expired_token():
@@ -93,21 +62,15 @@ def test_expired_token():
         {
             "sub": "testuser",
             "type": "access",
-            "exp": datetime.now(timezone.utc)
-            - timedelta(minutes=1),
+            "exp": datetime.now(timezone.utc) - timedelta(minutes=1),
         },
         SECRET_KEY,
         algorithm=ALGORITHM,
     )
 
-    assert verify_token(
-        token,
-        expected_type="access"
-    ) is None
+    assert verify_token(token, expected_type="access") is None
 
-    print(
-        "   ✅ Expired token rejected"
-    )
+    print("   ✅ Expired token rejected")
 
 
 def test_invalid_signature():
@@ -119,21 +82,15 @@ def test_invalid_signature():
         {
             "sub": "testuser",
             "type": "access",
-            "exp": datetime.now(timezone.utc)
-            + timedelta(minutes=5),
+            "exp": datetime.now(timezone.utc) + timedelta(minutes=5),
         },
         "WRONG_SECRET",
         algorithm=ALGORITHM,
     )
 
-    assert verify_token(
-        token,
-        expected_type="access"
-    ) is None
+    assert verify_token(token, expected_type="access") is None
 
-    print(
-        "   ✅ Invalid token signature rejected"
-    )
+    print("   ✅ Invalid token signature rejected")
 
 
 # ==========================================================
@@ -152,6 +109,4 @@ if __name__ == "__main__":
     test_expired_token()
     test_invalid_signature()
 
-    print(
-        "\n🎉 ALL JWT TESTS COMPLETED SUCCESSFULLY"
-    )
+    print("\n🎉 ALL JWT TESTS COMPLETED SUCCESSFULLY")
