@@ -4,7 +4,7 @@ A REST API built with FastAPI demonstrating secure user authentication using JWT
 
 This project was built to explore modern backend architecture, authentication security patterns, database design, token lifecycle management, and integration testing using Python.
 
-**Last updated:** 10-07-2026
+**Last updated:** 13-07-2026
 
 ---
 
